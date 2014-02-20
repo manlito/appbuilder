@@ -1,0 +1,31 @@
+<section class="render-app">
+  <div class="container">
+    <article class="content">
+      <header class="page-header clearfix">
+        <h2 class="pull-left">
+          <a href="#" ui-sref="app.preview.home">
+            {{ app.title}}
+          </a> 
+        </h2>
+        <div class="pull-right top-buttons">
+          <button ng-click="savePreviewData()" class="btn btn-default pull-right" type="button"><span class="glyphicon glyphicon glyphicon-floppy-disk"></span> Save Data in Browser</button>
+          <button ng-click="removePreviewData()" class="btn btn-default btn-danger pull-right" type="button"><span class="glyphicon glyphicon-remove"></span></button>
+        </div>
+      </header>
+      <div class="row">
+        <div class="col-sm-4">
+          <ul class="nav nav-pills nav-stacked">
+            <li ui-sref-active="active" ng-repeat="model in app.models | filter:{ showInMenu: true }">
+              <a href="#" ui-sref="app.preview.list({appId: app.id, model: model.title})" >{{ model.title }}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-sm-8">
+          <div class="edit-form">
+            <div ui-view></div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>

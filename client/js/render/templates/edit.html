@@ -1,0 +1,18 @@
+
+<div class="form form-login">
+  <div class="row form-group">
+    <h3>{{ model.title }}</h3>
+  </div>
+  <div class="row form-group" ng-repeat="field in model.fields">
+    <label>{{ field.title }}</label>
+
+    <!-- The field types -->
+    <div field></div>
+                  
+  </div>
+
+  <div class="row commands">
+      <button ui-sref="app.preview.list({ model: model.title })" class="btn btn-default pull-left" type="button"><span class="glyphicon glyphicon glyphicon glyphicon-remove"></span> Cancel</button>
+      <button ng-click="save()" class="btn btn-default" type="button"><span class="glyphicon glyphicon glyphicon-ok"></span> Save</button>
+  </div>
+</div>

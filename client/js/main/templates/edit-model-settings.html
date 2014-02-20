@@ -1,0 +1,29 @@
+<div>
+  
+  <div class="row form-group">
+    <h3><a href="#" editable-text="model.title">{{ model.title }}</a>
+    <div class="btn-group pull-right">
+      <button ng-click="deleteModel($index)" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-remove"></span></button>
+      <button ng-click="editModelSettings = !editModelSettings" class="btn btn-default" role="button"><span class="glyphicon glyphicon-pencil"></span> Settings</button>
+    </div>
+    </h3>
+  </div>
+  
+  <div ng-if="editModelSettings " class="animate-if edit-field-form">
+    <div class="form-horizontal form-login" novalidate>
+      <div class="row form-group">
+        <h4>Model Settings</h4>
+      </div>
+      <div class="row form-group">
+        <label>Label fields</label>
+        <input type="text" ui-select2="labelFieldOptions" ng-model="model.labelField" data-placeholder="Type a field" />
+      </div>
+      <div class="row form-group">
+        <label>Show in Menu</label>
+        <select ng-model="model.showInMenu" class="form-control" ng-options="boolToStr(item) for item in [true, false]">
+        </select>
+      </div>
+    </div>
+  </div>
+  
+</div>

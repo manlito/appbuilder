@@ -1,0 +1,40 @@
+<section class="home">
+  <div class="container">
+    <article class="content">
+      <header class="page-header">
+        <h2><a href="#" editable-text="app.title">
+          {{ app.title || 'New App' }}
+        </a></h2> 
+      </header>
+      <div class="forms">
+        <div ng-repeat="model in app.models">
+          <div class="form form-login">
+            
+            <div editable-model-settings></div>
+            
+          	<div ui-sortable="sortableFields" ng-model="model.fields">
+          	  <div class="row form-group" ng-repeat="field in model.fields">
+                <label><a href="#" editable-text="field.title">{{ field.title }}</label>
+                  <!-- The field types -->
+                <div editable-field></div>
+              </div>         
+            </div>
+
+            <p class="add-field">
+              <button ng-click="addField(model)" class="btn btn-default" type="button"><span class="glyphicon glyphicon-plus"></span> Add Field</button>
+            </p>
+
+          </div>
+        </div>
+        <p class="add-field">
+          <button ng-click="addModel()" class="btn btn-default btn-lg" type="button"><span class="glyphicon glyphicon-plus"></span> Add Model</button>
+        </p>
+        <div>
+          <p class="save-app">
+            <button ng-click="saveApp()" class="btn btn-primary btn-lg" type="button"><span class="glyphicon" ng-class="pendingSave ? 'glyphicon-floppy-disk' : 'glyphicon-floppy-saved'"></span> Save App</button>
+          </p>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
