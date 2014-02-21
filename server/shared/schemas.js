@@ -13,7 +13,6 @@ var itemSchema = new mongoose.Schema({
   extra: { type: 'Mixed' }
 }, { _id : false });
 
-module.exports.itemSchema = itemSchema;
 
 // Schema Model
 var modelSchema = new mongoose.Schema({
@@ -21,7 +20,8 @@ var modelSchema = new mongoose.Schema({
   title: { type: String, required: true },
   labelField: [ String ],
   showInMenu: { type: Boolean, 'default': true },
-  fields: [ itemSchema ] 
+  fields: [ itemSchema ]
 }, { _id : false });
 
+module.exports.itemSchema = itemSchema;
 module.exports.modelSchema = modelSchema;

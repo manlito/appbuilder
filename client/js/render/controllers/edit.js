@@ -8,7 +8,7 @@ var _ = require('lodash'),
 'use strict';
 
 exports = module.exports = function (ngModule) {
-  ngModule.controller('EditCtrl', function ($scope, format, app, appData, recordData, Restangular, alert, $state, $stateParams) {
+  ngModule.controller('EditCtrl', function ($scope, format, models, app, appData, recordData, Restangular, alert, $state, $stateParams) {
     $scope.model = _.find(app.models, function(model) {
       return model.title === $stateParams.model;
     });
@@ -18,11 +18,12 @@ exports = module.exports = function (ngModule) {
     $scope.appData = appData;
     
     $scope.getModelName = function(modelId) {
-      return format.getModelById(app.models, modelId).title;   
+      return models.getModelById(app.models, modelId).title;   
     };
     
     $scope.getFormattedOption = function(modelId, record) {
-      return format.formatOption(app.models, modelId, record);
+      var model = models.getModelById(app.models, modelId);
+      return format.formatOption(model, record);
     };
     
     $scope.save = function() {

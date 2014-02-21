@@ -90,28 +90,21 @@
       }
     }
   }
-  .forms {
-    
-    .model-title {
-      border: 0;
-      margin: 0;
-      text-align: center;
-      font-size: 24px;
-    }
-    
-    .add-field {
-      text-align: center;
-      margin: 1em;
-    }
-    
-    .save-app {
-      text-align: right;
-      margin: 1em;
-    }
-    
-    .edit-field-form {
-    }
 
+
+  section.home {
+
+  }
+
+  section.status {
+    th,
+    tr {
+      text-align: center;
+    }
+  }
+  
+  section.creator {
+    
     .edit-field-form .form-horizontal {
       background-color: #f4f4f4;
       .input-group {
@@ -119,7 +112,28 @@
         padding: 2px;
       }
     }
-    
+  
+    .forms {
+      
+      .model-title {
+        border: 0;
+        margin: 0;
+        text-align: center;
+        font-size: 24px;
+      }
+      
+      .add-field {
+        text-align: center;
+        margin: 1em;
+      }
+      
+      .save-app {
+        text-align: right;
+        margin: 1em;
+      }
+  
+    }
+
     .animate-if {
     }
     .animate-if.ng-enter {
@@ -150,21 +164,8 @@
     .form-horizontal .form-group:after {
       display: none;
     }
-  
-  }
-
-  section.home {
 
   }
-
-  section.status {
-    th,
-    tr {
-      text-align: center;
-    }
-  }
-  
-  
 }
 
 .drop-placeholder {
@@ -173,7 +174,11 @@
 }
 
 .drop-option-placeholder {
-  background-color: #f8f8f8;
+  border: 1px solid #fff;
   height: 20px;
 }
 
+.drop-related-placeholder {
+  border: 1px solid #fff;
+  height: 20px;
+}

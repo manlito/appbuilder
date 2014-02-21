@@ -90,6 +90,11 @@ ngModule.config(function ($stateProvider) {
                             id: 'f' + Math.random(),
                             title: 'Address', 
                             type: 'String' 
+                          },
+                          {
+                            id: 'r' + Math.random(),
+                            title: 'Contacts', 
+                            type: 'OneToManyRelated'
                           }
                         ]
                       },

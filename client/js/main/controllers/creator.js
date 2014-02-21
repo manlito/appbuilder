@@ -16,6 +16,11 @@ exports = module.exports = function (ngModule) {
       cancel: '',
       handle: 'button.btn-move-field'
     };
+    $scope.sortableRelatedFields = {
+      placeholder: 'drop-related-placeholder',
+      cancel: '',
+      handle: 'button.btn-move-field'
+    };
     $scope.sortableOptions = {
       placeholder: 'drop-option-placeholder',
       cancel: '',
@@ -37,10 +42,6 @@ exports = module.exports = function (ngModule) {
         title: "New Field",
         type: 'String' 
       });
-    };
-    
-    $scope.deleteField = function(model, index) {
-      model.fields.splice(index, 1);
     };
     
     $scope.deleteModel = function(index) {
@@ -78,7 +79,7 @@ exports = module.exports = function (ngModule) {
     return {
       replace: true,
       template: rhtml('../templates/edit-field.html'),
-      controller: function($scope, format) {
+      controller: function($scope, format, models) {
         
         // For one to many
         $scope.selectableModels = _.filter($scope.app.models, function(model) {
@@ -103,18 +104,54 @@ exports = module.exports = function (ngModule) {
             }
           }
         };
+                
+        $scope.$watch('editMode', $scope.initEditMode);
+        $scope.$watch('field.type', $scope.initEditField);
         
-        $scope.syncRelationshipFields = function(newValue, oldValue) {
+        function attachRelatedModel() {
+          models.getModelById($scope.app.models, $scope.field.extra).fields.push({
+            id: 'r' + Math.random(),
+            title: $scope.model.title,
+            type: 'OneToManyRelated',
+            extra: $scope.field.id
+          });          
+        }
+        
+        function dettachRelatedModel(fromModelId) {
+          _.remove(models.getModelById($scope.app.models, fromModelId).fields, function(field) {
+            return field.type === 'OneToManyRelated' && field.extra === $scope.field.id;
+          });
+        }
+        
+        $scope.$watch('field.type', function(newValue, oldValue) {
           if (newValue !== oldValue) {
             if ($scope.field.type === 'OneToMany') {
               // In this case, attach to related model
+              attachRelatedModel();
             }            
           }
-        };
+        });
         
-        $scope.$watch('editMode', $scope.initEditMode);
-        $scope.$watch('field.type', $scope.initEditField);
-        $scope.$watch('field.type', $scope.syncRelationshipFields);
+        $scope.$watch('field.extra', function(newValue, oldValue) {
+          if (newValue !== oldValue) {
+            if ($scope.field.type === 'OneToMany') {
+              // Remove previous relation
+              dettachRelatedModel(oldValue);
+              // Update the extra field for related field
+              attachRelatedModel();
+            }
+          }
+        });
+        
+        $scope.deleteField = function(model, index) {
+          // Detach any model
+          var field = model.fields[index];
+          if (field.type === 'OneToMany') {
+            dettachRelatedModel(field.extra);
+          }
+          // Remove from array
+          model.fields.splice(index, 1);
+        };
         
         $scope.addOption = function(newOption) {
           $scope.field.extra.push(newOption);
@@ -127,7 +164,7 @@ exports = module.exports = function (ngModule) {
         };
         
         $scope.formatModelName = function(modelId) {
-          return format.formatPlaceholder($scope.app.models, modelId);
+          return format.formatPlaceholder(models.getModelById($scope.app.models, modelId));
         };
                 
       },

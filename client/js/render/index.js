@@ -12,6 +12,7 @@ var ngModule = angular.module('app.main');
 
 // Services
 require('./services/format')(ngModule);
+require('./services/models')(ngModule);
 
 // Controllers
 require('./controllers/default')(ngModule);
@@ -49,10 +50,9 @@ ngModule.config(function ($stateProvider) {
       template: rhtml('./templates/edit.html'),
       controller: 'EditCtrl',
       resolve: {
-        recordData: ['Restangular', '$stateParams', 'app', 'appData', 'format', function (Restangular, $stateParams, app, appData, format) {
+        recordData: ['Restangular', '$stateParams', 'app', 'appData', 'models', function (Restangular, $stateParams, app, appData, models) {
           if ($stateParams.recordId !== 'new') {
-            var model = format.getModelByTitle(app.models, $stateParams.model);
-            console.log(model);
+            var model = models.getModelByTitle(app.models, $stateParams.model);
             return  _.find(appData[model.id], function(modelData) {
               return modelData.id === $stateParams.recordId; 
             });

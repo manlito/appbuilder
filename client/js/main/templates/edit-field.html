@@ -16,12 +16,14 @@
     <span ng-if="field.type == 'OneToMany'" class="input-group-btn">
       <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
     </span>
+
+    <input ng-if="field.type == 'OneToManyRelated'" class="form-control" />
     
     <!-- The Edit button -->
     <span class="input-group-btn">
-      <button ng-click="deleteField(model, $index)" class="btn btn-default" type="button"><span class="glyphicon glyphicon-remove"></span></button>
+      <button ng-show="field.type !== 'OneToManyRelated'" ng-click="deleteField(model, $index)" class="btn btn-default" type="button"><span class="glyphicon glyphicon-remove"></span></button>
       <button class="btn btn-default btn-move-field" type="button"><span class="glyphicon glyphicon-move"></span></button>
-      <button ng-click="editMode = !editMode" class="btn btn-default" type="button"><span class="glyphicon glyphicon-pencil"></span></button>
+      <button ng-show="field.type !== 'OneToManyRelated'" ng-click="editMode = !editMode" class="btn btn-default" type="button"><span class="glyphicon glyphicon-pencil"></span></button>
     </span>
   </div>
 

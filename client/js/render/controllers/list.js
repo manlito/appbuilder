@@ -8,17 +8,14 @@ var _ = require('lodash'),
 'use strict';
 
 exports = module.exports = function (ngModule) {
-  ngModule.controller('ListCtrl', function ($scope, format, app, appData, Restangular, alert, $stateParams) {
+  ngModule.controller('ListCtrl', function ($scope, models, format, app, appData, Restangular, alert, $stateParams) {
     $scope.model = _.find(app.models, function(model) {
       return model.title === $stateParams.model;
     });
     
-    $scope.$watch('appData', function(newValue, oldValue) {
-     console.log('Changed appDad');
-    });
-    
     $scope.formatRecord = function(record, field) {
-      return format.formatRecord(app.models, appData, record, field);
+      var model = models.getModelById(app.models, field.extra);
+      return format.formatRecord(model, appData, record, field);
     };
     
     $scope.records = appData[$scope.model.id];

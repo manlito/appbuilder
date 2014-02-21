@@ -7,29 +7,27 @@
 var _ = require('lodash'),
     $ = require('jquery');
 
-function formatRecord(appModels, appData, record, field) {
+function formatRecord(model, appData, record, field) {
   switch (field.type) {
-    case 'OneToMany': {      
+    case 'OneToMany': {
       var relatedRecord = _.find(appData[field.extra], function(searchRecord) {
-        return searchRecord.id === record[field.title];
+        return searchRecord.id === record[field.id];
       });
-      return formatOption(appModels, field.extra, relatedRecord);
+      return formatOption(model, relatedRecord);
     }
     default: return record[field.id];
   }
 }
 
-function formatOption(appModels, relatedModel, record) {
+function formatOption(model, record) {
   var formattedLabel = [];
 
-  var targetModel = getModelById(appModels, relatedModel);
-
-  if (targetModel.labelField.length !== 0) {
-    formattedLabel = _.map(targetModel.labelField, function(field) {
+  if (model.labelField.length !== 0) {
+    formattedLabel = _.map(model.labelField, function(field) {
       return record[field];
     });
   } else {
-    formattedLabel = _.map(targetModel.fields, function(field) {
+    formattedLabel = _.map(model.fields, function(field) {
       return record[field.id];
     });
   };
@@ -37,20 +35,8 @@ function formatOption(appModels, relatedModel, record) {
   return formattedLabel.join(' ');
 };
 
-function formatPlaceholder(appModels, modelId) {
-  return getModelById(appModels, modelId).title;
-}
-
-function getModelById(appModels, modelId) {
-  return _.find(appModels, function(model) {
-    return model.id === modelId;
-  });
-}
-
-function getModelByTitle(appModels, modelTitle) {
-  return _.find(appModels, function(model) {
-    return model.title === modelTitle;
-  });
+function formatPlaceholder(model) {
+  return model.title;
 }
 
 // Public API
@@ -60,8 +46,6 @@ exports = module.exports = function (ngModule) {
       return {
         formatRecord: formatRecord,
         formatOption: formatOption,
-        getModelById: getModelById,
-        getModelByTitle: getModelByTitle,
         formatPlaceholder: formatPlaceholder
       };
     }
