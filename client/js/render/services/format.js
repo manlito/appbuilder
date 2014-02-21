@@ -15,16 +15,14 @@ function formatRecord(appModels, appData, record, field) {
       });
       return formatOption(appModels, field.extra, relatedRecord);
     }
-    default: return record[field.title];
+    default: return record[field.id];
   }
 }
 
 function formatOption(appModels, relatedModel, record) {
   var formattedLabel = [];
 
-  var targetModel = _.find(appModels, function(model) {
-    return model.title === relatedModel;
-  });
+  var targetModel = getModelById(appModels, relatedModel);
 
   if (targetModel.labelField.length !== 0) {
     formattedLabel = _.map(targetModel.labelField, function(field) {
@@ -32,20 +30,39 @@ function formatOption(appModels, relatedModel, record) {
     });
   } else {
     formattedLabel = _.map(targetModel.fields, function(field) {
-      return record[field.title];
+      return record[field.id];
     });
   };
   
   return formattedLabel.join(' ');
 };
-    
+
+function formatPlaceholder(appModels, modelId) {
+  return getModelById(appModels, modelId).title;
+}
+
+function getModelById(appModels, modelId) {
+  return _.find(appModels, function(model) {
+    return model.id === modelId;
+  });
+}
+
+function getModelByTitle(appModels, modelTitle) {
+  return _.find(appModels, function(model) {
+    return model.title === modelTitle;
+  });
+}
+
 // Public API
 exports = module.exports = function (ngModule) {
   ngModule.provider('format', {    
     $get: function () {
       return {
         formatRecord: formatRecord,
-        formatOption: formatOption
+        formatOption: formatOption,
+        getModelById: getModelById,
+        getModelByTitle: getModelByTitle,
+        formatPlaceholder: formatPlaceholder
       };
     }
   });

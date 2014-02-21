@@ -24,11 +24,6 @@ ngModule.config(function ($stateProvider) {
           controller: 'HomeCtrl',
           template: rhtml('./templates/home.html')
         }
-      },
-      resolve: {
-        features: ['Restangular', function (Restangular) {
-          return Restangular.all('features').getList();
-        }]
       }
     })
     .state('app.creator', {
@@ -50,58 +45,71 @@ ngModule.config(function ($stateProvider) {
             title: 'New App: ' + d.toLocaleDateString(),
             models: [
                       {
+                        id: 'm' + Math.random(),
                         title: 'Contact',
                         fields: [
                           {
+                            id: 'f' + Math.random(),
                             title: "First",
                             type: 'String' 
                           },
                           {
+                            id: 'f' + Math.random(),
                             title: "Last",
                             type: 'String' 
                           },
                           {
+                            id: 'f' + Math.random(),
                             title: "Company",
                             type: 'OneToMany',
                             extra: 'Company'
                           },
                           {
+                            id: 'f' + Math.random(),
                             title: "Age",
                             type: 'Number' 
                           }
                        ]
                       },
                       {
+                        id: 'm' + Math.random(),
                         title: 'Company',
                         fields: [
                           {
+                            id: 'f' + Math.random(),
                             title: 'Name', 
                             type: 'String' 
                           },
                           {
+                            id: 'f' + Math.random(),
                             title: 'Industry',
                             type: 'Dropdown',
                             extra: ['Marketing', 'Internet', 'Other']
                           },
                           { 
+                            id: 'f' + Math.random(),
                             title: 'Address', 
                             type: 'String' 
                           }
                         ]
                       },
                       {
+                        id: 'm' + Math.random(),
                         title: 'Tasks',
                         fields: [
                           {
+                            id: 'f' + Math.random(),
                             title: 'Title', 
                             type: 'String' 
                           },
                           {
+                            id: 'f' + Math.random(),
                             title: 'Type',
                             type: 'Dropdown',
                             extra: ['Call', 'Meeting']
                           },
                           { 
+                            id: 'f' + Math.random(),
                             title: 'Notes', 
                             type: 'TextArea' 
                           }

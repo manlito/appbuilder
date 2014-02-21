@@ -21,7 +21,7 @@ exports = module.exports = function (ngModule) {
       return format.formatRecord(app.models, appData, record, field);
     };
     
-    $scope.records = appData[$scope.model.title];
+    $scope.records = appData[$scope.model.id];
     $scope.showWelcome = typeof $scope.records === 'undefined' || $scope.records.length == 0;
   });
 };

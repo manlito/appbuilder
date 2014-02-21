@@ -49,9 +49,11 @@ ngModule.config(function ($stateProvider) {
       template: rhtml('./templates/edit.html'),
       controller: 'EditCtrl',
       resolve: {
-        recordData: ['Restangular', '$stateParams', 'appData', function (Restangular, $stateParams, appData) {
+        recordData: ['Restangular', '$stateParams', 'app', 'appData', 'format', function (Restangular, $stateParams, app, appData, format) {
           if ($stateParams.recordId !== 'new') {
-            return _.find(appData[$stateParams.model], function(modelData) {
+            var model = format.getModelByTitle(app.models, $stateParams.model);
+            console.log(model);
+            return  _.find(appData[model.id], function(modelData) {
               return modelData.id === $stateParams.recordId; 
             });
             //return Restangular.one('apps', $stateParams.appId).get();            

@@ -5,7 +5,6 @@
 'use strict';
 
 exports = module.exports = function (ngModule) {
-  ngModule.controller('HomeCtrl', function ($scope, features) {
-    $scope.items = features;
+  ngModule.controller('HomeCtrl', function ($scope) {
   });
 };

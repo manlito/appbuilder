@@ -17,19 +17,23 @@ exports = module.exports = function (ngModule) {
     // For concept proof
     $scope.appData = appData;
     
-    $scope.getFormattedOption = function(relatedModel, record) {
-      return format.formatOption(app.models, relatedModel, record);
+    $scope.getModelName = function(modelId) {
+      return format.getModelById(app.models, modelId).title;   
+    };
+    
+    $scope.getFormattedOption = function(modelId, record) {
+      return format.formatOption(app.models, modelId, record);
     };
     
     $scope.save = function() {
-      
+
       _.assign(recordData, $scope.recordData);
       
       if ($stateParams.recordId === 'new') {
-        if (typeof appData[$scope.model.title] === 'undefined') {
-          appData[$scope.model.title] = [];          
+        if (typeof appData[$scope.model.id] === 'undefined') {
+          appData[$scope.model.id] = [];          
         }
-        appData[$scope.model.title].push($scope.recordData);
+        appData[$scope.model.id].push($scope.recordData);
       }
       
       $state.go('app.preview.list', { model: $scope.model.title });

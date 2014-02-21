@@ -18,8 +18,6 @@ exports.register = function (app, restify) {
   //     csrf = ultimate.server.controller.csrf;
 
   // API
-  restify.model('/api/features', 'Feature');
-  restify.model('/api/models', 'Model');
   restify.model('/api/users', 'User');
   restify.model('/api/apps', 'App');
   restify.any  ('/api/login', c.api.auth.login, ['post']);

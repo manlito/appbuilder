@@ -2,18 +2,19 @@
 
   <!-- The fields -->
 
-    <input ng-if="field.type == 'String'" ng-model="recordData[field.title]" type="text" class="form-control" placeholder="" />
+    <input ng-if="field.type == 'String'" ng-model="recordData[field.id]" type="text" class="form-control" placeholder="" />
     
-    <select ng-if="field.type == 'Dropdown'" ng-model="recordData[field.title]" class="form-control" >
+    <select ng-if="field.type == 'Dropdown'" ng-model="recordData[field.id]" class="form-control" >
       <option ng-repeat="label in field.extra">{{ label }}</option>
     </select>
     
-    <input ng-if="field.type == 'Number'" ng-model="recordData[field.title]" type="number" class="form-control" placeholder="Enter a number" />
+    <input ng-if="field.type == 'Number'" ng-model="recordData[field.id]" type="number" class="form-control" placeholder="Enter a number" />
     
-    <textarea ng-if="field.type == 'TextArea'" ng-model="recordData[field.title]" class="form-control" ></textarea>
+    <textarea ng-if="field.type == 'TextArea'" ng-model="recordData[field.id]" class="form-control" ></textarea>
     
-    <div ng-if="field.type == 'OneToMany'">
-      <select ui-select2 ng-model="recordData[field.title]" data-placeholder="Type a {{ field.extra }}" >
+    <div ng-if="field.type == 'OneToMany'"> 
+      <select ui-select2 ng-model="recordData[field.id]" data-placeholder="Type a {{ getModelName(field.extra) }}" >
+        <option value=""></option>
         <!-- for concept proof. We need to get the 
             data from the server, and then select a label field -->
         <option ng-repeat="record in appData[field.extra]" value="{{ record.id }}">{{ getFormattedOption(field.extra, record) }}</option>

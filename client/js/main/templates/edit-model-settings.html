@@ -9,14 +9,16 @@
     </h3>
   </div>
   
-  <div ng-if="editModelSettings " class="animate-if edit-field-form">
+  <div ng-if="editModelSettings" class="animate-if edit-field-form">
     <div class="form-horizontal form-login" novalidate>
       <div class="row form-group">
         <h4>Model Settings</h4>
       </div>
       <div class="row form-group">
         <label>Label fields</label>
-        <input type="text" ui-select2="labelFieldOptions" ng-model="model.labelField" data-placeholder="Type a field" />
+        <select multiple ui-select2 ng-model="model.labelField" data-placeholder="Type a field" >
+          <option ng-repeat="field in model.fields" value="{{ field.id }}">{{ field.title }}</option>
+        </select>
       </div>
       <div class="row form-group">
         <label>Show in Menu</label>

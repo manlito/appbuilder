@@ -52,7 +52,6 @@ ngModule.run(function(editableOptions) {
 
 // Select2 Settings
 ngModule.run(['uiSelect2Config', function(uiSelect2Config) {
-    uiSelect2Config.placeholder = "Select";
     uiSelect2Config.width = "100%";
     uiSelect2Config.allowClear = true;
     uiSelect2Config.containerCssClass = 'select2boostrap-container'

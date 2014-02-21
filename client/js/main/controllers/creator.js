@@ -33,6 +33,7 @@ exports = module.exports = function (ngModule) {
     
     $scope.addField = function (model) {
       model.fields.push({
+        id: 'f' + Math.random(),
         title: "New Field",
         type: 'String' 
       });
@@ -48,6 +49,7 @@ exports = module.exports = function (ngModule) {
     
     $scope.addModel = function (model) {
       var newModel = {
+        id: 'm' + Math.random(),
         title: "New Model",
         fields: []
       };
@@ -55,8 +57,7 @@ exports = module.exports = function (ngModule) {
       app.models.push(newModel);
     };
     
-    $scope.saveApp = function() {
-      
+    $scope.saveApp = function() {      
       if ($stateParams.appId !== 'new') {
         console.log(app);
         app.put().then(
@@ -77,11 +78,11 @@ exports = module.exports = function (ngModule) {
     return {
       replace: true,
       template: rhtml('../templates/edit-field.html'),
-      controller: function($scope) {
+      controller: function($scope, format) {
         
         // For one to many
         $scope.selectableModels = _.filter($scope.app.models, function(model) {
-          return model.title !== $scope.model.title;
+          return model.id !== $scope.model.id;
         });
         
         $scope.initEditMode = function(newValue, oldValue) {
@@ -98,13 +99,22 @@ exports = module.exports = function (ngModule) {
               $scope.field.extra = [];
               $scope.optionsList = [];
             } else if ($scope.field.type === 'OneToMany') {
-              $scope.field.extra = $scope.selectableModels[0].title || '';
+              $scope.field.extra = $scope.selectableModels[0].id || '';
             }
+          }
+        };
+        
+        $scope.syncRelationshipFields = function(newValue, oldValue) {
+          if (newValue !== oldValue) {
+            if ($scope.field.type === 'OneToMany') {
+              // In this case, attach to related model
+            }            
           }
         };
         
         $scope.$watch('editMode', $scope.initEditMode);
         $scope.$watch('field.type', $scope.initEditField);
+        $scope.$watch('field.type', $scope.syncRelationshipFields);
         
         $scope.addOption = function(newOption) {
           $scope.field.extra.push(newOption);
@@ -114,7 +124,12 @@ exports = module.exports = function (ngModule) {
         $scope.deleteOption = function(index) {
           $scope.field.extra.splice(index, 1);
           $scope.optionsList.splice(index, 1);
-        };        
+        };
+        
+        $scope.formatModelName = function(modelId) {
+          return format.formatPlaceholder($scope.app.models, modelId);
+        };
+                
       },
       link: function(scope, element, attrs) {
       }
@@ -124,14 +139,7 @@ exports = module.exports = function (ngModule) {
       replace: true,
       template: rhtml('../templates/edit-model-settings.html'),
       controller: function($scope, app) {
-        // Populate the labelField
-        $scope.labelFieldOptions = {
-          multiple: true,
-          simple_tags: true,
-          tags: _.map($scope.model.fields, function(field) { 
-            return field.title; 
-          })
-        };
+        
         $scope.boolToStr = function(value) {
           return value ? 'Yes' : 'No';
         };
