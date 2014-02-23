@@ -17,6 +17,21 @@ exports = module.exports = function (ngModule) {
     // For concept proof
     $scope.appData = appData;
     
+    // Get related fields for related... when using LOCALSTORAGE
+    $scope.recordDataRelated = {};
+    _.each($scope.model.fields, function(field) {
+      if (field.type == 'OneToManyRelated') {
+        // This iterate over records in the related model
+        var relatedRecords = _.filter(appData[field.extra.relatedModelId], function(record) {
+          return record[field.extra.relatedFieldId] === recordData.id;
+        });
+        // Set the selected value
+        $scope.recordData[field.id] = relatedRecords;
+        // Set all the available objects
+        $scope.recordDataRelated[field.id] = appData[field.extra.relatedModelId];
+      }
+    });
+    
     $scope.getModelName = function(modelId) {
       return models.getModelById(app.models, modelId).title;   
     };

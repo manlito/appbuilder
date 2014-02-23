@@ -113,13 +113,18 @@ exports = module.exports = function (ngModule) {
             id: 'r' + Math.random(),
             title: $scope.model.title,
             type: 'OneToManyRelated',
-            extra: $scope.field.id
+            extra: {
+              relatedModelId: $scope.model.id,
+              relatedFieldId: $scope.field.id
+            }
           });          
         }
         
         function dettachRelatedModel(fromModelId) {
           _.remove(models.getModelById($scope.app.models, fromModelId).fields, function(field) {
-            return field.type === 'OneToManyRelated' && field.extra === $scope.field.id;
+            return field.type === 'OneToManyRelated' && 
+                   field.extra.relatedModelId === $scope.model.id &&
+                   field.extra.relatedFieldId === $scope.field.id;
           });
         }
         

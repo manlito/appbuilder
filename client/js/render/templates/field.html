@@ -21,4 +21,8 @@
       </select>
     </div>
 
+    <div ng-if="field.type == 'OneToManyRelated'">
+        <a ng-repeat="record in recordData[field.id]" ui-sref="app.preview.edit({ model: getModelName(field.extra.relatedModelId) , recordId: record.id })"><span class="label label-primary field-related" >{{ getFormattedOption(field.extra.relatedModelId, record) }}</option></a>
+    </div>
+
 </div>

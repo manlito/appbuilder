@@ -13,6 +13,10 @@ exports = module.exports = function (ngModule) {
       return model.title === $stateParams.model;
     });
     
+    $scope.deleteRecord = function(record) {
+      console.log('removing');
+    };
+    
     $scope.formatRecord = function(record, field) {
       var model = models.getModelById(app.models, field.extra);
       return format.formatRecord(model, appData, record, field);

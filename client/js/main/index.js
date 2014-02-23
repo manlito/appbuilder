@@ -41,86 +41,74 @@ ngModule.config(function ($stateProvider) {
           }
           // The default
           var d = new Date();
+          
+          var relatedModelId = 'm' + Math.random();
+          var relatedFieldId = 'f' + Math.random();
           return {
             title: 'New App: ' + d.toLocaleDateString(),
             models: [
-                      {
-                        id: 'm' + Math.random(),
-                        title: 'Contact',
-                        fields: [
-                          {
-                            id: 'f' + Math.random(),
-                            title: "First",
-                            type: 'String' 
-                          },
-                          {
-                            id: 'f' + Math.random(),
-                            title: "Last",
-                            type: 'String' 
-                          },
-                          {
-                            id: 'f' + Math.random(),
-                            title: "Company",
-                            type: 'OneToMany',
-                            extra: 'Company'
-                          },
-                          {
-                            id: 'f' + Math.random(),
-                            title: "Age",
-                            type: 'Number' 
-                          }
-                       ]
-                      },
-                      {
-                        id: 'm' + Math.random(),
-                        title: 'Company',
-                        fields: [
-                          {
-                            id: 'f' + Math.random(),
-                            title: 'Name', 
-                            type: 'String' 
-                          },
-                          {
-                            id: 'f' + Math.random(),
-                            title: 'Industry',
-                            type: 'Dropdown',
-                            extra: ['Marketing', 'Internet', 'Other']
-                          },
-                          { 
-                            id: 'f' + Math.random(),
-                            title: 'Address', 
-                            type: 'String' 
-                          },
-                          {
-                            id: 'r' + Math.random(),
-                            title: 'Contacts', 
-                            type: 'OneToManyRelated'
-                          }
-                        ]
-                      },
-                      {
-                        id: 'm' + Math.random(),
-                        title: 'Tasks',
-                        fields: [
-                          {
-                            id: 'f' + Math.random(),
-                            title: 'Title', 
-                            type: 'String' 
-                          },
-                          {
-                            id: 'f' + Math.random(),
-                            title: 'Type',
-                            type: 'Dropdown',
-                            extra: ['Call', 'Meeting']
-                          },
-                          { 
-                            id: 'f' + Math.random(),
-                            title: 'Notes', 
-                            type: 'TextArea' 
-                          }
-                        ]
-                      }
+              {
+                "id": "m0.6104102414101362",
+                "title": "Contacto",
+                "fields": [
+                  {
+                    "id": "f0.20813365024514496",
+                    "title": "Nombre",
+                    "type": "String"
+                  },
+                  {
+                    "id": "f0.18818561104126275",
+                    "title": "Ciudad",
+                    "type": "String"
+                  },
+                  {
+                    "id": "f0.6773503618314862",
+                    "title": "Empresa",
+                    "type": "OneToMany",
+                    "extra": "m0.9856685441918671"
+                  }
+                ],
+                "showInMenu": true,
+                "labelField": [
+                  "f0.20813365024514496"
                 ]
+              },
+              {
+                "id": "m0.9856685441918671",
+                "title": "Empresa",
+                "fields": [
+                  {
+                    "id": "f0.5080045296344906",
+                    "title": "Nombre",
+                    "type": "String"
+                  },
+                  {
+                    "id": "f0.40268137492239475",
+                    "title": "Tipo",
+                    "type": "Dropdown",
+                    "extra": [
+                      "Agroquímicos",
+                      "Veterinaria",
+                      "Venta de Ganado",
+                      "Otro"
+                    ]
+                  },
+                  {
+                    "id": "r0.12555734277702868",
+                    "title": "Contactos",
+                    "type": "OneToManyRelated",
+                    "extra": {
+                      "relatedFieldId": "f0.6773503618314862",
+                      "relatedModelId": "m0.6104102414101362"
+                    }
+                  }
+                ],
+                "showInMenu": true,
+                "labelField": [
+                  "f0.5080045296344906"
+                ]
+              }
+            ]
           };
         }]
       }
