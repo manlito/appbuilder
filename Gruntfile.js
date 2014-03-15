@@ -46,7 +46,7 @@ module.exports = function (grunt) {
         },
         afterHook: function (source) {
           source = ngmin.annotate(source);
-          source = uglify.minify(source, { fromString: true }).code;
+          source = uglify.minify(source, { fromString: true, mangle: false }).code;
           return source;
         }
       }
@@ -254,10 +254,6 @@ module.exports = function (grunt) {
     },
     uglify: {  // grunt-contrib-uglify
       dist: {
-        options: {
-          mangle: false,
-          beautify: true
-        },
         files: _.transform({
           paths: _.map([
             'es5-shim.js',

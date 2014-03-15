@@ -1,26 +1,14 @@
 {
-  "name": "ultimate-seed",
-  "description": "The ultimate full-stack AngularJS + Node.js/Express seed (batteries included!) that makes web developers insanely productive.",
-  "version": "0.3.6",
+  "name": "appbuiler",
+  "description": "Build simple apps with a simple tool... and pay no money meanwhile.",
+  "version": "0.0.1",
   "private": true,
   "license": "MIT",
-  "author": "Pilwon Huh <pilwon@gmail.com>",
-  "contributors": [
-    {
-      "name": "Pilwon Huh",
-      "email": "pilwon@gmail.com",
-      "url": "https://github.com/pilwon"
-    },
-    {
-      "name": "Brian Park",
-      "email": "yaru22@gmail.com",
-      "url": "https://github.com/yaru22"
-    }
-  ],
-  "homepage": "https://github.com/pilwon/ultimate-seed",
+  "author": "Manlio Barajas<manlito@gmail.com>",
+  "homepage": "https://github.com/manlito/appbuilder",
   "repository": {
     "type": "git",
-    "url": "git://github.com/pilwon/ultimate-seed.git"
+    "url": "git://github.com/manlito/appbuilder.git"
   },
   "keywords": [
     "javascript",
