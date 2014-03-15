@@ -43,12 +43,12 @@ module.exports = function (grunt) {
           bundle.transform(coffeeify);
           bundle.transform(hbsfy);
           bundle.transform(rfileify);
-        },
-        afterHook: function (source) {
-          source = ngmin.annotate(source);
-          source = uglify.minify(source, { fromString: true, mangle: false }).code;
-          return source;
-        }
+        }//,
+//        afterHook: function (source) {
+//          source = ngmin.annotate(source);
+//          source = uglify.minify(source, { fromString: true, mangle }).code;
+//          return source;
+//        }
       }
     },
     cachebust: {
