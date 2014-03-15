@@ -20,7 +20,7 @@
         <li ui-sref-active="active">
           <a ui-sref="app.apps">Apps</a>
         </li>
-        <li ui-sref-active="active">
+        <li ui-sref-active="active" ng-if="user.isLoggedIn()">
           <a ui-sref="app.creator({ appId: 'new' })">Creator</a>
         </li>
       </ul>
