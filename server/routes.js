@@ -17,9 +17,11 @@ exports.register = function (app, restify) {
   //     ensureUser = ultimate.server.controller.ensureUser,
   //     csrf = ultimate.server.controller.csrf;
 
+  // Apps
+  restify.user('/api/apps', c.api.apps, ['list', 'get', 'post', 'put', 'delete']);
+
   // API
   restify.model('/api/users', 'User');
-  restify.model('/api/apps', 'App');
   restify.any  ('/api/login', c.api.auth.login, ['post']);
   restify.any  ('/api/logout', c.api.auth.logout, ['post']);
   restify.any  ('/api/me', c.api.auth.me, ['list']);

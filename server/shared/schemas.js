@@ -23,5 +23,20 @@ var modelSchema = new mongoose.Schema({
   fields: [ itemSchema ]
 }, { _id : false });
 
+var appSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  models: [modelSchema],
+  userId: mongoose.Schema.Types.ObjectId
+});
+// Duplicate the ID field.
+appSchema.virtual('id').get(function(){
+  return this._id.toHexString();
+});
+// Ensure virtual fields are serialised.
+appSchema.set('toJSON', {
+  virtuals: true
+});
+
 module.exports.itemSchema = itemSchema;
 module.exports.modelSchema = modelSchema;
+module.exports.appSchema = appSchema;
