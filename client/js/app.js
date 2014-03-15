@@ -100,8 +100,8 @@ ngModule.run(function ($rootScope, layout) {
     spinnerFunc();
   };
   $rootScope.$on('$stateChangeStart', _.wrap(layout.startSpinner, commonFunc));
-  $rootScope.$on('$stateChangeSuccess', _.wrap(layout.stopSpinner, commonFunc));
-  $rootScope.$on('$stateChangeError', _.wrap(layout.stopSpinner, commonFunc));
+  $rootScope.$on('$stateChangeSuccess', layout.stopSpinner);
+  $rootScope.$on('$stateChangeError', layout.stopSpinner);
 });
 
 // Connect to socket.io server.

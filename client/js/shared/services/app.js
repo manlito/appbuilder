@@ -27,7 +27,7 @@ function _initConfig() {
   // Config defaults.
   config = _.defaults(config, {
     test: $cookieStore.get('test'),
-    title: 'ultimate-seed'
+    title: 'AppBuilder'
   });
 
   // Convert config to scope.

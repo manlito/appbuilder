@@ -128,3 +128,12 @@ ngModule.config(function ($stateProvider) {
       }
     });
 });
+
+// Authorizations
+ngModule.run(function (auth) {
+  auth.authorize({
+    'app.apps': {
+      allow: ['user']
+    }
+  });
+});
