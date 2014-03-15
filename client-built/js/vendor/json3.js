@@ -1,104 +1,104 @@
-!function(t) {
-    function e(t) {
-        if (e[t] !== r) return e[t];
-        var n;
-        if ("bug-string-char-index" == t) n = "a" != "a"[0]; else if ("json" == t) n = e("json-stringify") && e("json-parse"); else {
-            var i, s = '{"a":[1,true,false,null,"\\u0000\\b\\n\\f\\r\\t"]}';
-            if ("json-stringify" == t) {
-                var a = l.stringify, u = "function" == typeof a && c;
-                if (u) {
-                    (i = function() {
+!function(window) {
+    function has(name) {
+        if (has[name] !== undef) return has[name];
+        var isSupported;
+        if ("bug-string-char-index" == name) isSupported = "a" != "a"[0]; else if ("json" == name) isSupported = has("json-stringify") && has("json-parse"); else {
+            var value, serialized = '{"a":[1,true,false,null,"\\u0000\\b\\n\\f\\r\\t"]}';
+            if ("json-stringify" == name) {
+                var stringify = JSON3.stringify, stringifySupported = "function" == typeof stringify && isExtended;
+                if (stringifySupported) {
+                    (value = function() {
                         return 1;
-                    }).toJSON = i;
+                    }).toJSON = value;
                     try {
-                        u = "0" === a(0) && "0" === a(new Number()) && '""' == a(new String()) && a(o) === r && a(r) === r && a() === r && "1" === a(i) && "[1]" == a([ i ]) && "[null]" == a([ r ]) && "null" == a(null) && "[null,null,null]" == a([ r, o, null ]) && a({
-                            a: [ i, !0, !1, null, "\x00\b\n\f\r	" ]
-                        }) == s && "1" === a(null, i) && "[\n 1,\n 2\n]" == a([ 1, 2 ], null, 1) && '"-271821-04-20T00:00:00.000Z"' == a(new Date(-864e13)) && '"+275760-09-13T00:00:00.000Z"' == a(new Date(864e13)) && '"-000001-01-01T00:00:00.000Z"' == a(new Date(-621987552e5)) && '"1969-12-31T23:59:59.999Z"' == a(new Date(-1));
-                    } catch (h) {
-                        u = !1;
+                        stringifySupported = "0" === stringify(0) && "0" === stringify(new Number()) && '""' == stringify(new String()) && stringify(getClass) === undef && stringify(undef) === undef && stringify() === undef && "1" === stringify(value) && "[1]" == stringify([ value ]) && "[null]" == stringify([ undef ]) && "null" == stringify(null) && "[null,null,null]" == stringify([ undef, getClass, null ]) && stringify({
+                            a: [ value, !0, !1, null, "\x00\b\n\f\r	" ]
+                        }) == serialized && "1" === stringify(null, value) && "[\n 1,\n 2\n]" == stringify([ 1, 2 ], null, 1) && '"-271821-04-20T00:00:00.000Z"' == stringify(new Date(-864e13)) && '"+275760-09-13T00:00:00.000Z"' == stringify(new Date(864e13)) && '"-000001-01-01T00:00:00.000Z"' == stringify(new Date(-621987552e5)) && '"1969-12-31T23:59:59.999Z"' == stringify(new Date(-1));
+                    } catch (exception) {
+                        stringifySupported = !1;
                     }
                 }
-                n = u;
+                isSupported = stringifySupported;
             }
-            if ("json-parse" == t) {
-                var d = l.parse;
-                if ("function" == typeof d) try {
-                    if (0 === d("0") && !d(!1)) {
-                        i = d(s);
-                        var p = 5 == i.a.length && 1 === i.a[0];
-                        if (p) {
+            if ("json-parse" == name) {
+                var parse = JSON3.parse;
+                if ("function" == typeof parse) try {
+                    if (0 === parse("0") && !parse(!1)) {
+                        value = parse(serialized);
+                        var parseSupported = 5 == value.a.length && 1 === value.a[0];
+                        if (parseSupported) {
                             try {
-                                p = !d('"	"');
-                            } catch (h) {}
-                            if (p) try {
-                                p = 1 !== d("01");
-                            } catch (h) {}
-                            if (p) try {
-                                p = 1 !== d("1.");
-                            } catch (h) {}
+                                parseSupported = !parse('"	"');
+                            } catch (exception) {}
+                            if (parseSupported) try {
+                                parseSupported = 1 !== parse("01");
+                            } catch (exception) {}
+                            if (parseSupported) try {
+                                parseSupported = 1 !== parse("1.");
+                            } catch (exception) {}
                         }
                     }
-                } catch (h) {
-                    p = !1;
+                } catch (exception) {
+                    parseSupported = !1;
                 }
-                n = p;
+                isSupported = parseSupported;
             }
         }
-        return e[t] = !!n;
+        return has[name] = !!isSupported;
     }
-    var n, i, r, o = {}.toString, s = "function" == typeof define && define.amd, a = "object" == typeof JSON && JSON, l = "object" == typeof exports && exports && !exports.nodeType && exports;
-    l && a ? (l.stringify = a.stringify, l.parse = a.parse) : l = t.JSON = a || {};
-    var c = new Date(-0xc782b5b800cec);
+    var isProperty, forEach, undef, getClass = {}.toString, isLoader = "function" == typeof define && define.amd, nativeJSON = "object" == typeof JSON && JSON, JSON3 = "object" == typeof exports && exports && !exports.nodeType && exports;
+    JSON3 && nativeJSON ? (JSON3.stringify = nativeJSON.stringify, JSON3.parse = nativeJSON.parse) : JSON3 = window.JSON = nativeJSON || {};
+    var isExtended = new Date(-0xc782b5b800cec);
     try {
-        c = -109252 == c.getUTCFullYear() && 0 === c.getUTCMonth() && 1 === c.getUTCDate() && 10 == c.getUTCHours() && 37 == c.getUTCMinutes() && 6 == c.getUTCSeconds() && 708 == c.getUTCMilliseconds();
-    } catch (u) {}
-    if (!e("json")) {
-        var h = "[object Function]", d = "[object Date]", p = "[object Number]", f = "[object String]", g = "[object Array]", m = "[object Boolean]", v = e("bug-string-char-index");
-        if (!c) var b = Math.floor, y = [ 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ], w = function(t, e) {
-            return y[e] + 365 * (t - 1970) + b((t - 1969 + (e = +(e > 1))) / 4) - b((t - 1901 + e) / 100) + b((t - 1601 + e) / 400);
+        isExtended = -109252 == isExtended.getUTCFullYear() && 0 === isExtended.getUTCMonth() && 1 === isExtended.getUTCDate() && 10 == isExtended.getUTCHours() && 37 == isExtended.getUTCMinutes() && 6 == isExtended.getUTCSeconds() && 708 == isExtended.getUTCMilliseconds();
+    } catch (exception) {}
+    if (!has("json")) {
+        var functionClass = "[object Function]", dateClass = "[object Date]", numberClass = "[object Number]", stringClass = "[object String]", arrayClass = "[object Array]", booleanClass = "[object Boolean]", charIndexBuggy = has("bug-string-char-index");
+        if (!isExtended) var floor = Math.floor, Months = [ 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 ], getDay = function(year, month) {
+            return Months[month] + 365 * (year - 1970) + floor((year - 1969 + (month = +(month > 1))) / 4) - floor((year - 1901 + month) / 100) + floor((year - 1601 + month) / 400);
         };
-        (n = {}.hasOwnProperty) || (n = function(t) {
-            var e, i = {};
-            return (i.__proto__ = null, i.__proto__ = {
+        (isProperty = {}.hasOwnProperty) || (isProperty = function(property) {
+            var constructor, members = {};
+            return (members.__proto__ = null, members.__proto__ = {
                 toString: 1
-            }, i).toString != o ? n = function(t) {
-                var e = this.__proto__, n = t in (this.__proto__ = null, this);
-                return this.__proto__ = e, n;
-            } : (e = i.constructor, n = function(t) {
-                var n = (this.constructor || e).prototype;
-                return t in this && !(t in n && this[t] === n[t]);
-            }), i = null, n.call(this, t);
+            }, members).toString != getClass ? isProperty = function(property) {
+                var original = this.__proto__, result = property in (this.__proto__ = null, this);
+                return this.__proto__ = original, result;
+            } : (constructor = members.constructor, isProperty = function(property) {
+                var parent = (this.constructor || constructor).prototype;
+                return property in this && !(property in parent && this[property] === parent[property]);
+            }), members = null, isProperty.call(this, property);
         });
-        var $ = {
+        var PrimitiveTypes = {
             "boolean": 1,
             number: 1,
             string: 1,
             undefined: 1
-        }, _ = function(t, e) {
-            var n = typeof t[e];
-            return "object" == n ? !!t[e] : !$[n];
+        }, isHostType = function(object, property) {
+            var type = typeof object[property];
+            return "object" == type ? !!object[property] : !PrimitiveTypes[type];
         };
-        if (i = function(t, e) {
-            var r, s, a, l = 0;
-            (r = function() {
+        if (forEach = function(object, callback) {
+            var Properties, members, property, size = 0;
+            (Properties = function() {
                 this.valueOf = 0;
-            }).prototype.valueOf = 0, s = new r();
-            for (a in s) n.call(s, a) && l++;
-            return r = s = null, l ? i = 2 == l ? function(t, e) {
-                var i, r = {}, s = o.call(t) == h;
-                for (i in t) s && "prototype" == i || n.call(r, i) || !(r[i] = 1) || !n.call(t, i) || e(i);
-            } : function(t, e) {
-                var i, r, s = o.call(t) == h;
-                for (i in t) s && "prototype" == i || !n.call(t, i) || (r = "constructor" === i) || e(i);
-                (r || n.call(t, i = "constructor")) && e(i);
-            } : (s = [ "valueOf", "toString", "toLocaleString", "propertyIsEnumerable", "isPrototypeOf", "hasOwnProperty", "constructor" ], 
-            i = function(t, e) {
-                var i, r, a = o.call(t) == h, l = !a && "function" != typeof t.constructor && _(t, "hasOwnProperty") ? t.hasOwnProperty : n;
-                for (i in t) a && "prototype" == i || !l.call(t, i) || e(i);
-                for (r = s.length; i = s[--r]; l.call(t, i) && e(i)) ;
-            }), i(t, e);
-        }, !e("json-stringify")) {
-            var x = {
+            }).prototype.valueOf = 0, members = new Properties();
+            for (property in members) isProperty.call(members, property) && size++;
+            return Properties = members = null, size ? forEach = 2 == size ? function(object, callback) {
+                var property, members = {}, isFunction = getClass.call(object) == functionClass;
+                for (property in object) isFunction && "prototype" == property || isProperty.call(members, property) || !(members[property] = 1) || !isProperty.call(object, property) || callback(property);
+            } : function(object, callback) {
+                var property, isConstructor, isFunction = getClass.call(object) == functionClass;
+                for (property in object) isFunction && "prototype" == property || !isProperty.call(object, property) || (isConstructor = "constructor" === property) || callback(property);
+                (isConstructor || isProperty.call(object, property = "constructor")) && callback(property);
+            } : (members = [ "valueOf", "toString", "toLocaleString", "propertyIsEnumerable", "isPrototypeOf", "hasOwnProperty", "constructor" ], 
+            forEach = function(object, callback) {
+                var property, length, isFunction = getClass.call(object) == functionClass, hasProperty = !isFunction && "function" != typeof object.constructor && isHostType(object, "hasOwnProperty") ? object.hasOwnProperty : isProperty;
+                for (property in object) isFunction && "prototype" == property || !hasProperty.call(object, property) || callback(property);
+                for (length = members.length; property = members[--length]; hasProperty.call(object, property) && callback(property)) ;
+            }), forEach(object, callback);
+        }, !has("json-stringify")) {
+            var Escapes = {
                 92: "\\\\",
                 34: '\\"',
                 8: "\\b",
@@ -106,13 +106,13 @@
                 10: "\\n",
                 13: "\\r",
                 9: "\\t"
-            }, k = "000000", C = function(t, e) {
-                return (k + (e || 0)).slice(-t);
-            }, T = "\\u00", S = function(t) {
-                var e, n = '"', i = 0, r = t.length, o = r > 10 && v;
-                for (o && (e = t.split("")); r > i; i++) {
-                    var s = t.charCodeAt(i);
-                    switch (s) {
+            }, leadingZeroes = "000000", toPaddedString = function(width, value) {
+                return (leadingZeroes + (value || 0)).slice(-width);
+            }, unicodePrefix = "\\u00", quote = function(value) {
+                var symbols, result = '"', index = 0, length = value.length, isLarge = length > 10 && charIndexBuggy;
+                for (isLarge && (symbols = value.split("")); length > index; index++) {
+                    var charCode = value.charCodeAt(index);
+                    switch (charCode) {
                       case 8:
                       case 9:
                       case 10:
@@ -120,63 +120,67 @@
                       case 13:
                       case 34:
                       case 92:
-                        n += x[s];
+                        result += Escapes[charCode];
                         break;
 
                       default:
-                        if (32 > s) {
-                            n += T + C(2, s.toString(16));
+                        if (32 > charCode) {
+                            result += unicodePrefix + toPaddedString(2, charCode.toString(16));
                             break;
                         }
-                        n += o ? e[i] : v ? t.charAt(i) : t[i];
+                        result += isLarge ? symbols[index] : charIndexBuggy ? value.charAt(index) : value[index];
                     }
                 }
-                return n + '"';
-            }, D = function(t, e, s, a, l, c, u) {
-                var h, v, y, $, _, x, k, T, E, M, P, A, O, I, N, j;
+                return result + '"';
+            }, serialize = function(property, object, callback, properties, whitespace, indentation, stack) {
+                var value, className, year, month, date, time, hours, minutes, seconds, milliseconds, results, element, index, length, prefix, result;
                 try {
-                    h = e[t];
-                } catch (F) {}
-                if ("object" == typeof h && h) if (v = o.call(h), v != d || n.call(h, "toJSON")) "function" == typeof h.toJSON && (v != p && v != f && v != g || n.call(h, "toJSON")) && (h = h.toJSON(t)); else if (h > -1 / 0 && 1 / 0 > h) {
-                    if (w) {
-                        for (_ = b(h / 864e5), y = b(_ / 365.2425) + 1970 - 1; w(y + 1, 0) <= _; y++) ;
-                        for ($ = b((_ - w(y, 0)) / 30.42); w(y, $ + 1) <= _; $++) ;
-                        _ = 1 + _ - w(y, $), x = (h % 864e5 + 864e5) % 864e5, k = b(x / 36e5) % 24, T = b(x / 6e4) % 60, 
-                        E = b(x / 1e3) % 60, M = x % 1e3;
-                    } else y = h.getUTCFullYear(), $ = h.getUTCMonth(), _ = h.getUTCDate(), k = h.getUTCHours(), 
-                    T = h.getUTCMinutes(), E = h.getUTCSeconds(), M = h.getUTCMilliseconds();
-                    h = (0 >= y || y >= 1e4 ? (0 > y ? "-" : "+") + C(6, 0 > y ? -y : y) : C(4, y)) + "-" + C(2, $ + 1) + "-" + C(2, _) + "T" + C(2, k) + ":" + C(2, T) + ":" + C(2, E) + "." + C(3, M) + "Z";
-                } else h = null;
-                if (s && (h = s.call(e, t, h)), null === h) return "null";
-                if (v = o.call(h), v == m) return "" + h;
-                if (v == p) return h > -1 / 0 && 1 / 0 > h ? "" + h : "null";
-                if (v == f) return S("" + h);
-                if ("object" == typeof h) {
-                    for (I = u.length; I--; ) if (u[I] === h) throw TypeError();
-                    if (u.push(h), P = [], N = c, c += l, v == g) {
-                        for (O = 0, I = h.length; I > O; O++) A = D(O, h, s, a, l, c, u), P.push(A === r ? "null" : A);
-                        j = P.length ? l ? "[\n" + c + P.join(",\n" + c) + "\n" + N + "]" : "[" + P.join(",") + "]" : "[]";
-                    } else i(a || h, function(t) {
-                        var e = D(t, h, s, a, l, c, u);
-                        e !== r && P.push(S(t) + ":" + (l ? " " : "") + e);
-                    }), j = P.length ? l ? "{\n" + c + P.join(",\n" + c) + "\n" + N + "}" : "{" + P.join(",") + "}" : "{}";
-                    return u.pop(), j;
+                    value = object[property];
+                } catch (exception) {}
+                if ("object" == typeof value && value) if (className = getClass.call(value), className != dateClass || isProperty.call(value, "toJSON")) "function" == typeof value.toJSON && (className != numberClass && className != stringClass && className != arrayClass || isProperty.call(value, "toJSON")) && (value = value.toJSON(property)); else if (value > -1 / 0 && 1 / 0 > value) {
+                    if (getDay) {
+                        for (date = floor(value / 864e5), year = floor(date / 365.2425) + 1970 - 1; getDay(year + 1, 0) <= date; year++) ;
+                        for (month = floor((date - getDay(year, 0)) / 30.42); getDay(year, month + 1) <= date; month++) ;
+                        date = 1 + date - getDay(year, month), time = (value % 864e5 + 864e5) % 864e5, hours = floor(time / 36e5) % 24, 
+                        minutes = floor(time / 6e4) % 60, seconds = floor(time / 1e3) % 60, milliseconds = time % 1e3;
+                    } else year = value.getUTCFullYear(), month = value.getUTCMonth(), date = value.getUTCDate(), 
+                    hours = value.getUTCHours(), minutes = value.getUTCMinutes(), seconds = value.getUTCSeconds(), 
+                    milliseconds = value.getUTCMilliseconds();
+                    value = (0 >= year || year >= 1e4 ? (0 > year ? "-" : "+") + toPaddedString(6, 0 > year ? -year : year) : toPaddedString(4, year)) + "-" + toPaddedString(2, month + 1) + "-" + toPaddedString(2, date) + "T" + toPaddedString(2, hours) + ":" + toPaddedString(2, minutes) + ":" + toPaddedString(2, seconds) + "." + toPaddedString(3, milliseconds) + "Z";
+                } else value = null;
+                if (callback && (value = callback.call(object, property, value)), null === value) return "null";
+                if (className = getClass.call(value), className == booleanClass) return "" + value;
+                if (className == numberClass) return value > -1 / 0 && 1 / 0 > value ? "" + value : "null";
+                if (className == stringClass) return quote("" + value);
+                if ("object" == typeof value) {
+                    for (length = stack.length; length--; ) if (stack[length] === value) throw TypeError();
+                    if (stack.push(value), results = [], prefix = indentation, indentation += whitespace, 
+                    className == arrayClass) {
+                        for (index = 0, length = value.length; length > index; index++) element = serialize(index, value, callback, properties, whitespace, indentation, stack), 
+                        results.push(element === undef ? "null" : element);
+                        result = results.length ? whitespace ? "[\n" + indentation + results.join(",\n" + indentation) + "\n" + prefix + "]" : "[" + results.join(",") + "]" : "[]";
+                    } else forEach(properties || value, function(property) {
+                        var element = serialize(property, value, callback, properties, whitespace, indentation, stack);
+                        element !== undef && results.push(quote(property) + ":" + (whitespace ? " " : "") + element);
+                    }), result = results.length ? whitespace ? "{\n" + indentation + results.join(",\n" + indentation) + "\n" + prefix + "}" : "{" + results.join(",") + "}" : "{}";
+                    return stack.pop(), result;
                 }
             };
-            l.stringify = function(t, e, n) {
-                var i, r, s, a;
-                if ("function" == typeof e || "object" == typeof e && e) if ((a = o.call(e)) == h) r = e; else if (a == g) {
-                    s = {};
-                    for (var l, c = 0, u = e.length; u > c; l = e[c++], a = o.call(l), (a == f || a == p) && (s[l] = 1)) ;
+            JSON3.stringify = function(source, filter, width) {
+                var whitespace, callback, properties, className;
+                if ("function" == typeof filter || "object" == typeof filter && filter) if ((className = getClass.call(filter)) == functionClass) callback = filter; else if (className == arrayClass) {
+                    properties = {};
+                    for (var value, index = 0, length = filter.length; length > index; value = filter[index++], 
+                    className = getClass.call(value), (className == stringClass || className == numberClass) && (properties[value] = 1)) ;
                 }
-                if (n) if ((a = o.call(n)) == p) {
-                    if ((n -= n % 1) > 0) for (i = "", n > 10 && (n = 10); i.length < n; i += " ") ;
-                } else a == f && (i = n.length <= 10 ? n : n.slice(0, 10));
-                return D("", (l = {}, l[""] = t, l), r, s, i, "", []);
+                if (width) if ((className = getClass.call(width)) == numberClass) {
+                    if ((width -= width % 1) > 0) for (whitespace = "", width > 10 && (width = 10); whitespace.length < width; whitespace += " ") ;
+                } else className == stringClass && (whitespace = width.length <= 10 ? width : width.slice(0, 10));
+                return serialize("", (value = {}, value[""] = source, value), callback, properties, whitespace, "", []);
             };
         }
-        if (!e("json-parse")) {
-            var E, M, P = String.fromCharCode, A = {
+        if (!has("json-parse")) {
+            var Index, Source, fromCharCode = String.fromCharCode, Unescapes = {
                 92: "\\",
                 34: '"',
                 47: "/",
@@ -185,15 +189,15 @@
                 110: "\n",
                 102: "\f",
                 114: "\r"
-            }, O = function() {
-                throw E = M = null, SyntaxError();
-            }, I = function() {
-                for (var t, e, n, i, r, o = M, s = o.length; s > E; ) switch (r = o.charCodeAt(E)) {
+            }, abort = function() {
+                throw Index = Source = null, SyntaxError();
+            }, lex = function() {
+                for (var value, begin, position, isSigned, charCode, source = Source, length = source.length; length > Index; ) switch (charCode = source.charCodeAt(Index)) {
                   case 9:
                   case 10:
                   case 13:
                   case 32:
-                    E++;
+                    Index++;
                     break;
 
                   case 123:
@@ -202,10 +206,11 @@
                   case 93:
                   case 58:
                   case 44:
-                    return t = v ? o.charAt(E) : o[E], E++, t;
+                    return value = charIndexBuggy ? source.charAt(Index) : source[Index], Index++, value;
 
                   case 34:
-                    for (t = "@", E++; s > E; ) if (r = o.charCodeAt(E), 32 > r) O(); else if (92 == r) switch (r = o.charCodeAt(++E)) {
+                    for (value = "@", Index++; length > Index; ) if (charCode = source.charCodeAt(Index), 
+                    32 > charCode) abort(); else if (92 == charCode) switch (charCode = source.charCodeAt(++Index)) {
                       case 92:
                       case 34:
                       case 47:
@@ -214,81 +219,87 @@
                       case 110:
                       case 102:
                       case 114:
-                        t += A[r], E++;
+                        value += Unescapes[charCode], Index++;
                         break;
 
                       case 117:
-                        for (e = ++E, n = E + 4; n > E; E++) r = o.charCodeAt(E), r >= 48 && 57 >= r || r >= 97 && 102 >= r || r >= 65 && 70 >= r || O();
-                        t += P("0x" + o.slice(e, E));
+                        for (begin = ++Index, position = Index + 4; position > Index; Index++) charCode = source.charCodeAt(Index), 
+                        charCode >= 48 && 57 >= charCode || charCode >= 97 && 102 >= charCode || charCode >= 65 && 70 >= charCode || abort();
+                        value += fromCharCode("0x" + source.slice(begin, Index));
                         break;
 
                       default:
-                        O();
+                        abort();
                     } else {
-                        if (34 == r) break;
-                        for (r = o.charCodeAt(E), e = E; r >= 32 && 92 != r && 34 != r; ) r = o.charCodeAt(++E);
-                        t += o.slice(e, E);
+                        if (34 == charCode) break;
+                        for (charCode = source.charCodeAt(Index), begin = Index; charCode >= 32 && 92 != charCode && 34 != charCode; ) charCode = source.charCodeAt(++Index);
+                        value += source.slice(begin, Index);
                     }
-                    if (34 == o.charCodeAt(E)) return E++, t;
-                    O();
+                    if (34 == source.charCodeAt(Index)) return Index++, value;
+                    abort();
 
                   default:
-                    if (e = E, 45 == r && (i = !0, r = o.charCodeAt(++E)), r >= 48 && 57 >= r) {
-                        for (48 == r && (r = o.charCodeAt(E + 1), r >= 48 && 57 >= r) && O(), i = !1; s > E && (r = o.charCodeAt(E), 
-                        r >= 48 && 57 >= r); E++) ;
-                        if (46 == o.charCodeAt(E)) {
-                            for (n = ++E; s > n && (r = o.charCodeAt(n), r >= 48 && 57 >= r); n++) ;
-                            n == E && O(), E = n;
+                    if (begin = Index, 45 == charCode && (isSigned = !0, charCode = source.charCodeAt(++Index)), 
+                    charCode >= 48 && 57 >= charCode) {
+                        for (48 == charCode && (charCode = source.charCodeAt(Index + 1), charCode >= 48 && 57 >= charCode) && abort(), 
+                        isSigned = !1; length > Index && (charCode = source.charCodeAt(Index), charCode >= 48 && 57 >= charCode); Index++) ;
+                        if (46 == source.charCodeAt(Index)) {
+                            for (position = ++Index; length > position && (charCode = source.charCodeAt(position), 
+                            charCode >= 48 && 57 >= charCode); position++) ;
+                            position == Index && abort(), Index = position;
                         }
-                        if (r = o.charCodeAt(E), 101 == r || 69 == r) {
-                            for (r = o.charCodeAt(++E), (43 == r || 45 == r) && E++, n = E; s > n && (r = o.charCodeAt(n), 
-                            r >= 48 && 57 >= r); n++) ;
-                            n == E && O(), E = n;
+                        if (charCode = source.charCodeAt(Index), 101 == charCode || 69 == charCode) {
+                            for (charCode = source.charCodeAt(++Index), (43 == charCode || 45 == charCode) && Index++, 
+                            position = Index; length > position && (charCode = source.charCodeAt(position), 
+                            charCode >= 48 && 57 >= charCode); position++) ;
+                            position == Index && abort(), Index = position;
                         }
-                        return +o.slice(e, E);
+                        return +source.slice(begin, Index);
                     }
-                    if (i && O(), "true" == o.slice(E, E + 4)) return E += 4, !0;
-                    if ("false" == o.slice(E, E + 5)) return E += 5, !1;
-                    if ("null" == o.slice(E, E + 4)) return E += 4, null;
-                    O();
+                    if (isSigned && abort(), "true" == source.slice(Index, Index + 4)) return Index += 4, 
+                    !0;
+                    if ("false" == source.slice(Index, Index + 5)) return Index += 5, !1;
+                    if ("null" == source.slice(Index, Index + 4)) return Index += 4, null;
+                    abort();
                 }
                 return "$";
-            }, N = function(t) {
-                var e, n;
-                if ("$" == t && O(), "string" == typeof t) {
-                    if ("@" == (v ? t.charAt(0) : t[0])) return t.slice(1);
-                    if ("[" == t) {
-                        for (e = []; t = I(), "]" != t; n || (n = !0)) n && ("," == t ? (t = I(), "]" == t && O()) : O()), 
-                        "," == t && O(), e.push(N(t));
-                        return e;
+            }, get = function(value) {
+                var results, hasMembers;
+                if ("$" == value && abort(), "string" == typeof value) {
+                    if ("@" == (charIndexBuggy ? value.charAt(0) : value[0])) return value.slice(1);
+                    if ("[" == value) {
+                        for (results = []; value = lex(), "]" != value; hasMembers || (hasMembers = !0)) hasMembers && ("," == value ? (value = lex(), 
+                        "]" == value && abort()) : abort()), "," == value && abort(), results.push(get(value));
+                        return results;
                     }
-                    if ("{" == t) {
-                        for (e = {}; t = I(), "}" != t; n || (n = !0)) n && ("," == t ? (t = I(), "}" == t && O()) : O()), 
-                        ("," == t || "string" != typeof t || "@" != (v ? t.charAt(0) : t[0]) || ":" != I()) && O(), 
-                        e[t.slice(1)] = N(I());
-                        return e;
+                    if ("{" == value) {
+                        for (results = {}; value = lex(), "}" != value; hasMembers || (hasMembers = !0)) hasMembers && ("," == value ? (value = lex(), 
+                        "}" == value && abort()) : abort()), ("," == value || "string" != typeof value || "@" != (charIndexBuggy ? value.charAt(0) : value[0]) || ":" != lex()) && abort(), 
+                        results[value.slice(1)] = get(lex());
+                        return results;
                     }
-                    O();
+                    abort();
                 }
-                return t;
-            }, j = function(t, e, n) {
-                var i = F(t, e, n);
-                i === r ? delete t[e] : t[e] = i;
-            }, F = function(t, e, n) {
-                var r, s = t[e];
-                if ("object" == typeof s && s) if (o.call(s) == g) for (r = s.length; r--; ) j(s, r, n); else i(s, function(t) {
-                    j(s, t, n);
+                return value;
+            }, update = function(source, property, callback) {
+                var element = walk(source, property, callback);
+                element === undef ? delete source[property] : source[property] = element;
+            }, walk = function(source, property, callback) {
+                var length, value = source[property];
+                if ("object" == typeof value && value) if (getClass.call(value) == arrayClass) for (length = value.length; length--; ) update(value, length, callback); else forEach(value, function(property) {
+                    update(value, property, callback);
                 });
-                return n.call(t, e, s);
+                return callback.call(source, property, value);
             };
-            l.parse = function(t, e) {
-                var n, i;
-                return E = 0, M = "" + t, n = N(I()), "$" != I() && O(), E = M = null, e && o.call(e) == h ? F((i = {}, 
-                i[""] = n, i), "", e) : n;
+            JSON3.parse = function(source, callback) {
+                var result, value;
+                return Index = 0, Source = "" + source, result = get(lex()), "$" != lex() && abort(), 
+                Index = Source = null, callback && getClass.call(callback) == functionClass ? walk((value = {}, 
+                value[""] = result, value), "", callback) : result;
             };
         }
     }
-    s && define(function() {
-        return l;
+    isLoader && define(function() {
+        return JSON3;
     });
 }(this);

@@ -255,6 +255,7 @@ module.exports = function (grunt) {
     uglify: {  // grunt-contrib-uglify
       dist: {
         options: {
+          mangle: false,
           beautify: true
         },
         files: _.transform({
@@ -279,7 +280,6 @@ module.exports = function (grunt) {
     },
     useminPrepare: {  // grunt-usemin
       options: {
-        flow: { steps: { 'js': ['concat'], 'css': ['concat', 'cssmin']}, post: {}},
         dest: '<%= project.path.dist %>'
       },
       html: '<%= project.path.client %>/*.html'
