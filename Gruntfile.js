@@ -254,6 +254,9 @@ module.exports = function (grunt) {
     },
     uglify: {  // grunt-contrib-uglify
       dist: {
+        options: {
+          beautify: true
+        },
         files: _.transform({
           paths: _.map([
             'es5-shim.js',
