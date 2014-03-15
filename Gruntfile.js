@@ -279,6 +279,7 @@ module.exports = function (grunt) {
     },
     useminPrepare: {  // grunt-usemin
       options: {
+        flow: { steps: { 'js': ['concat'], 'css': ['concat', 'cssmin']}, post: {}},
         dest: '<%= project.path.dist %>'
       },
       html: '<%= project.path.client %>/*.html'
