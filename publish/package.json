@@ -1,0 +1,20 @@
+{
+    "name": "appbuilder-publish",
+    "description": "Module to publish apps created with manlito/appbuilder",
+    "version": "0.0.1",
+    "private": true,
+    "license": "MIT",
+    "author": "Manlio Barajas <manlito@gmail.com>",
+    "homepage": "https://github.com/manlito/appbuilder",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/manlito/appbuilder.git"
+    },
+    "dependencies": {
+        "q": "1.0.1",
+        "ncp": "0.5.0",
+        "monk": "0.8.1"
+    },
+    "devDependencies": {
+    }
+}

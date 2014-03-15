@@ -31,7 +31,7 @@ ngModule.config(function ($stateProvider) {
         }
       },
       resolve: {
-        app: ['Restangular', '$stateParams', function (Restangular, $stateParams) {
+        app: ['Restangular', '$stateParams', '$http', function (Restangular, $stateParams, $http) {
           if ($stateParams.appId !== 'new') {
             return Restangular.one('apps', $stateParams.appId).get();            
           }

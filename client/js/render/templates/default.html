@@ -1,7 +1,7 @@
 <section class="render-app">
   <div class="container">
     <article class="content">
-      <header class="page-header clearfix">
+      <header ng-if="!$root.production" class="page-header clearfix">
         <h2 class="pull-left">
           <a href="#" ui-sref="app.preview.home">
             {{ app.title}}
@@ -13,16 +13,20 @@
         </div>
       </header>
       <div class="row">
-        <div class="col-sm-4">
-          <ul class="nav nav-pills nav-stacked">
-            <li ui-sref-active="active" ng-repeat="model in app.models | filter:{ showInMenu: true }">
-              <a href="#" ui-sref="app.preview.list({appId: app.id, model: model.title})" >{{ model.title }}</a>
-            </li>
-          </ul>
+        <div class="menu col-sm-4">
+          <div class="well">
+            <ul class="nav nav-pills nav-stacked">
+              <li ui-sref-active="active" ng-repeat="model in app.models | filter:{ showInMenu: true }">
+                <a href="#" ui-sref="app.preview.list({appId: app.id, model: model.title})" >{{ model.title }}</a>
+              </li>
+            </ul>
+          </div>
         </div>
         <div class="col-sm-8">
           <div class="edit-form">
-            <div ui-view></div>
+            <div ui-view>
+              <div ng-include="'/js/render/templates/home.html'"></div>
+            </div>
           </div>
         </div>
       </div>

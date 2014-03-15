@@ -48,42 +48,42 @@ ngModule.config(function ($stateProvider) {
             title: 'New App: ' + d.toLocaleDateString(),
             models: [
               {
-                "id": "m0.6104102414101362",
+                "id": "m6104102414101362",
                 "title": "Contacto",
                 "fields": [
                   {
-                    "id": "f0.20813365024514496",
+                    "id": "f20813365024514496",
                     "title": "Nombre",
                     "type": "String"
                   },
                   {
-                    "id": "f0.18818561104126275",
+                    "id": "f18818561104126275",
                     "title": "Ciudad",
                     "type": "String"
                   },
                   {
-                    "id": "f0.6773503618314862",
+                    "id": "f6773503618314862",
                     "title": "Empresa",
                     "type": "OneToMany",
-                    "extra": "m0.9856685441918671"
+                    "extra": "m9856685441918671"
                   }
                 ],
                 "showInMenu": true,
                 "labelField": [
-                  "f0.20813365024514496"
+                  "f20813365024514496"
                 ]
               },
               {
-                "id": "m0.9856685441918671",
+                "id": "m9856685441918671",
                 "title": "Empresa",
                 "fields": [
                   {
-                    "id": "f0.5080045296344906",
+                    "id": "f5080045296344906",
                     "title": "Nombre",
                     "type": "String"
                   },
                   {
-                    "id": "f0.40268137492239475",
+                    "id": "f40268137492239475",
                     "title": "Tipo",
                     "type": "Dropdown",
                     "extra": [
@@ -98,14 +98,14 @@ ngModule.config(function ($stateProvider) {
                     "title": "Contactos",
                     "type": "OneToManyRelated",
                     "extra": {
-                      "relatedFieldId": "f0.6773503618314862",
-                      "relatedModelId": "m0.6104102414101362"
+                      "relatedFieldId": "f6773503618314862",
+                      "relatedModelId": "m6104102414101362"
                     }
                   }
                 ],
                 "showInMenu": true,
                 "labelField": [
-                  "f0.5080045296344906"
+                  "f5080045296344906"
                 ]
               }
             ]

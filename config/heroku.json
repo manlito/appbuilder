@@ -1,5 +1,5 @@
 {
-  "url": "http://@@@@@.herokuapp.com",
+  "url": "http://appbuilder.herokuapp.com",
   "api": {
     "aws": {
       "key": "@@@@@",

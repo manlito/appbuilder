@@ -15,7 +15,7 @@ var app = require('../app');
 // Schema
 var schema = new mongoose.Schema({
   title: { type: String, required: true },
-  models: [app.shared.schemas.modelSchema] 
+  models: [app.shared.schemas.modelSchema]
 });
 
 // Restify

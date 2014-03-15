@@ -38,7 +38,7 @@ exports = module.exports = function (ngModule) {
     
     $scope.addField = function (model) {
       model.fields.push({
-        id: 'f' + Math.random(),
+        id: 'f' + ('' + Math.random()).substring(2),
         title: "New Field",
         type: 'String' 
       });
@@ -50,7 +50,7 @@ exports = module.exports = function (ngModule) {
     
     $scope.addModel = function (model) {
       var newModel = {
-        id: 'm' + Math.random(),
+        id: 'm' + + ('' + Math.random()).substring(2),
         title: "New Model",
         fields: []
       };
