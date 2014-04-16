@@ -139,6 +139,7 @@ function populateRenderDb(appBuild, dbSuffix) {
             console.error(err);
             deferred.reject(new Error(err));
         } else if (doc) {
+          console.log("Updating app");
             apps.findAndModify({ _id: appBuild.app._id }, appBuild.app, function(err) {
                 if (err) {
                     console.error(err);
@@ -148,6 +149,7 @@ function populateRenderDb(appBuild, dbSuffix) {
                 }
             });
         } else {
+            console.log("Inserting app");
             apps.insert(appBuild.app, function(err) {
                 if (err) {
                     console.error(err);

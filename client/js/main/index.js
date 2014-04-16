@@ -42,8 +42,6 @@ ngModule.config(function ($stateProvider) {
           // The default
           var d = new Date();
           
-          var relatedModelId = 'm' + Math.random();
-          var relatedFieldId = 'f' + Math.random();
           return {
             title: 'New App: ' + d.toLocaleDateString(),
             models: [
@@ -94,7 +92,7 @@ ngModule.config(function ($stateProvider) {
                     ]
                   },
                   {
-                    "id": "r0.12555734277702868",
+                    "id": "f12555734277702868",
                     "title": "Contactos",
                     "type": "OneToManyRelated",
                     "extra": {

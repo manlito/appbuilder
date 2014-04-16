@@ -10,6 +10,17 @@ var db = require('monk')('localhost/ultimate-seed'),
   fs = require('fs');
 ncp.limit = 16;
 
+var appId = "534ee773a8849c4357000001";
+var apps = db.get('apps');
+
+var appBuild = {
+  appId: appId,
+  config: {
+    dburi: 'mongodb://localhost/appbuilder-render'
+  }
+};
+
+
 // Just during development, remove the other builds
 function cleanFolder(appBuild) {
   console.log("Step cleanFolder");
@@ -167,6 +178,87 @@ function addDependencies(appBuild) {
   return replaceString(appBuild, filename, search, replace);
 }
 
+
+function getApp(appBuild) {
+  var deferred = Q.defer();
+  console.log("Step getApp");
+  apps.findById(appBuild.appId, function(err, app) {
+    if (err) {
+      console.error(err);
+      deferred.reject(new Error(err));
+    } else {
+      appBuild.app = app;
+      deferred.resolve(appBuild);
+    }
+  });
+  return deferred.promise;
+}
+
+function replaceDBDev(appBuild) {
+  console.log("Step replaceDBDev");
+  return replaceString(appBuild,
+      'build/' + appBuild.dirname + '/config/development.json',
+    '"db": "ultimate-seed"',
+    '"db": "appbuilder-render-dev"');
+}
+
+function dropDbDevelopment(appBuild) {
+  return dropDatabase(appBuild, '-dev')
+}
+
+function dropDatabase(appBuild, dbSuffix) {
+  console.log("Step DropDabase " + appBuild.config.dburi + dbSuffix);
+  var deferred = Q.defer();
+  var dbRender = require('monk')(appBuild.config.dburi + dbSuffix);
+  dbRender.get('apps').drop(function(err) {
+    deferred.resolve(appBuild);
+  });
+  return deferred.promise;
+}
+
+function populateRenderDbDevelopment(appBuild) {
+  return populateRenderDb(appBuild, '-dev');
+}
+
+function populateRenderDbProduction(appBuild) {
+  return populateRenderDb(appBuild, '');
+}
+
+function populateRenderDb(appBuild, dbSuffix) {
+  console.log("Step populateRenderDb - " + dbSuffix);
+  var deferred = Q.defer();
+  var dbRender = require('monk')(appBuild.config.dburi + dbSuffix),
+    apps = dbRender.get('apps');
+
+  apps.findById(appBuild.appId, function(err, doc){
+    if (err) {
+      console.error(err);
+      deferred.reject(new Error(err));
+    } else if (doc) {
+      apps.findAndModify({ _id: appBuild.appId }, appBuild.app, function(err) {
+        if (err) {
+          console.error(err);
+          deferred.reject(new Error(err));
+        } else {
+          deferred.resolve(appBuild);
+        }
+      });
+    } else {
+      apps.insert(appBuild.app, function(err) {
+        if (err) {
+          console.error(err);
+          deferred.reject(new Error(err));
+        } else {
+          deferred.resolve(appBuild);
+        }
+      });
+    }
+  });
+
+  return deferred.promise;
+}
+
+
 function addAppTitle(appBuild) {
   console.log("Step addAppTitle");
   var filename = 'build/' + appBuild.dirname + '/client/js/layout/index.js';
@@ -219,6 +311,10 @@ function replacePreviewInTemplateList(appBuild) {
 
 function replacePreviewInTemplateEdit(appBuild) {
   return replacePreviewInTemplatesAndControllers(appBuild, 'templates/edit.html');
+}
+
+function replacePreviewInTemplateField(appBuild) {
+  return replacePreviewInTemplatesAndControllers(appBuild, 'templates/field.html');
 }
 
 function replacePreviewInControllerEdit(appBuild) {
@@ -299,7 +395,13 @@ function replaceResolveForOneToMany(appBuild) {
     "return Restangular.one('app').one('model', model.id).one('record', $stateParams.recordId).get();");
 }
 
-
+function replaceCodeForOneToManyRelated(appBuild) {
+  console.log("Step replace OneToManyRelated" );
+  return replaceCodeBlock(appBuild,
+    'build/' + appBuild.dirname + '/client/js/render/controllers/edit.js',
+    'getOneToManyRelated',
+    "console.log($scope.recordData[field.id]);");
+}
 
 function replaceCodeBlock(appBuild, filename, tag, content) {
   var search = new RegExp("\\/\\*\\* start " + tag + "(.|\n)*?" + tag + "[^\\/]+\\/","g");
@@ -344,17 +446,19 @@ function appendString(appBuild, filename, content) {
     }
   });
 
+
   return deferred.promise;
 }
 
   steps = [cleanFolder, copyBaseFiles, copyRenderControllers, copyDependencies, addDependencies,
+    getApp, replaceDBDev, dropDbDevelopment, populateRenderDbDevelopment, populateRenderDbProduction,// DB Stuff
     registerRenderControllers, convertFromPreview, addRoutes, addAppTitle, addAppTitleDependency, addAppTitleToScope, addngRunConfigurations,
     setRenderModeInScope, copyCSSs, overWriteBase, replacePreviewInTemplateDefault, replacePreviewInTemplateList, replacePreviewInTemplateEdit,
-    replacePreviewInControllerEdit, replaceTitle, replaceConfigTitle, replaceCodeList, replaceCodeInsertRecord, replaceCodeUpdateRecord,
-    replaceReferenceInFieldOneToMany, replaceCodeForOneToMany, replaceResolveForOneToMany  // For OneToMany fields
+    replacePreviewInControllerEdit, replacePreviewInTemplateField, replaceTitle, replaceConfigTitle, replaceCodeList, replaceCodeInsertRecord, replaceCodeUpdateRecord,
+    replaceReferenceInFieldOneToMany, replaceCodeForOneToMany, replaceResolveForOneToMany, replaceCodeForOneToManyRelated  // For OneToMany fields
   ];
 
-  var result = Q({});
+  var result = Q(appBuild);
 
   steps.forEach(function(f) {
     result = result.then(f);

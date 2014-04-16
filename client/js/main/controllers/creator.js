@@ -110,7 +110,7 @@ exports = module.exports = function (ngModule) {
         
         function attachRelatedModel() {
           models.getModelById($scope.app.models, $scope.field.extra).fields.push({
-            id: 'r' + Math.random(),
+            id: 'r' + ('' + Math.random()).substring(2),
             title: $scope.model.title,
             type: 'OneToManyRelated',
             extra: {
