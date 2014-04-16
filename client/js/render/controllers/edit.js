@@ -12,6 +12,7 @@ exports = module.exports = function (ngModule) {
     $scope.model = _.find(app.models, function(model) {
       return model.title === $stateParams.model;
     });
+    console.log(recordData);
     $scope.recordData = _.clone(recordData);
 
     // For concept proof
@@ -22,15 +23,28 @@ exports = module.exports = function (ngModule) {
     _.each($scope.model.fields, function(field) {
       if (field.type == 'OneToManyRelated') {
         // This iterate over records in the related model
-        var relatedRecords = _.filter(appData[field.extra.relatedModelId], function(record) {
+        // Set the selected value
+        $scope.recordData[field.id] = _.filter(appData[field.extra.relatedModelId], function(record) {
           return record[field.extra.relatedFieldId] === recordData.id;
         });
-        // Set the selected value
-        $scope.recordData[field.id] = relatedRecords;
         // Set all the available objects
         $scope.recordDataRelated[field.id] = appData[field.extra.relatedModelId];
+      } else if (field.type == 'OneToMany') {
+        /** start getRelatedFields **/
+        // Populate list with records from the other model
+        $scope.relatedItemOptions[field.id] =  appData[field.extra];
+        /** end getRelatedFields **/
       }
     });
+
+    $scope.removeOneToManyRelated = function(recordData) {
+      _.each($scope.model.fields, function(field) {
+        if (field.type == 'OneToManyRelated') {
+          delete recordData[field.id];
+        }
+      });
+      return recordData;
+    };
 
     $scope.getModelName = function(modelId) {
       return models.getModelById(app.models, modelId).title;
@@ -52,6 +66,10 @@ exports = module.exports = function (ngModule) {
         }
         appData[$scope.model.id].push($scope.recordData);
         /** end saveRecord **/
+      } else {
+        /** start updateRecord **/
+
+        /** end updateRecord **/
       }
 
       $state.go('app.preview.list', { model: $scope.model.title });

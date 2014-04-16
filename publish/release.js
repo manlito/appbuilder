@@ -85,6 +85,7 @@ function addRoutes(appBuild) {
     + "  s.get('/api/app', c.appBuilder.getApp);" + "\n"
     + "  s.get('/api/app/title', c.appBuilder.getTitle);" + "\n"
     + "  s.get('/api/app/models/:modelId/records', c.appBuilder.getRecords);" + "\n"
+    + "  s.get('/api/app/model/:modelId/record/:recordId', c.appBuilder.getRecord);" + "\n"
     + "  s.post('/api/app/model/:modelId/record', c.appBuilder.saveRecord);" + "\n"
     + "  s.put('/api/app/model/:modelId/record/:recordId', c.appBuilder.updateRecord);" + "\n"
     + "\n" + search;
@@ -141,7 +142,7 @@ function copyDependencies(appBuild) {
 }
 
 function copyFiles(appBuild, sourceDir, targetDir) {
-  console.log("Step CopyFiles: " + sourceDir + " --> " + targetDir)
+  console.log("Step CopyFiles: " + sourceDir + " --> " + targetDir);
   var deferred = Q.defer();
 
   ncp(sourceDir, targetDir, function (err) {
@@ -255,13 +256,50 @@ function replaceCodeList(appBuild) {
     "$http.get('/api/app/models/' + $scope.model.id + '/records').success(function(records) { $scope.records = records; });");
 }
 
-function replaceCodeEdit(appBuild) {
-  console.log("Step replaceCodeEdit" );
+function replaceCodeInsertRecord(appBuild) {
+  console.log("Step replaceCodeInsertRecord" );
   return replaceCodeBlock(appBuild,
-    'build/' + appBuild.dirname + '/client/js/render/controllers/edit.js',
+      'build/' + appBuild.dirname + '/client/js/render/controllers/edit.js',
     'saveRecord',
     "$http.post('/api/app/model/' + $scope.model.id + '/record', $scope.recordData).success(function(record) { });");
 }
+
+function replaceCodeUpdateRecord(appBuild) {
+  console.log("Step replaceCodeUpdateRecord" );
+  return replaceCodeBlock(appBuild,
+      'build/' + appBuild.dirname + '/client/js/render/controllers/edit.js',
+    'updateRecord',
+    "$scope.removeOneToManyRelated(recordData).put();");
+}
+
+function replaceReferenceInFieldOneToMany(appBuild) {
+  console.log("Step replace Query OneToMany fields" );
+  return replaceString(appBuild,
+    'build/' + appBuild.dirname + '/client/js/render/templates/field.html',
+    'record in appData[field.extra]',
+    'record in relatedItemOptions[field.id]');
+}
+
+
+function replaceCodeForOneToMany(appBuild) {
+  console.log("Step replace Query OneToMany fields" );
+  return replaceCodeBlock(appBuild,
+    'build/' + appBuild.dirname + '/client/js/render/controllers/edit.js',
+    'getRelatedFields',
+    "$scope.relatedItemOptions = $scope.relatedItemOptions || {};\n" +
+    "        $http.get('/api/app/models/' + field.extra + '/records').success(function(data, status, headers, config) {\n" +
+    "          $scope.relatedItemOptions[field.id] = data;\n" +
+    "        });");
+}
+
+function replaceResolveForOneToMany(appBuild) {
+  return replaceCodeBlock(appBuild,
+    'build/' + appBuild.dirname + '/client/js/render/index.js',
+    'getRecordData',
+    "return Restangular.one('app').one('model', model.id).one('record', $stateParams.recordId).get();");
+}
+
+
 
 function replaceCodeBlock(appBuild, filename, tag, content) {
   var search = new RegExp("\\/\\*\\* start " + tag + "(.|\n)*?" + tag + "[^\\/]+\\/","g");
@@ -312,7 +350,9 @@ function appendString(appBuild, filename, content) {
   steps = [cleanFolder, copyBaseFiles, copyRenderControllers, copyDependencies, addDependencies,
     registerRenderControllers, convertFromPreview, addRoutes, addAppTitle, addAppTitleDependency, addAppTitleToScope, addngRunConfigurations,
     setRenderModeInScope, copyCSSs, overWriteBase, replacePreviewInTemplateDefault, replacePreviewInTemplateList, replacePreviewInTemplateEdit,
-    replacePreviewInControllerEdit, replaceTitle, replaceConfigTitle, replaceCodeList, replaceCodeEdit];
+    replacePreviewInControllerEdit, replaceTitle, replaceConfigTitle, replaceCodeList, replaceCodeInsertRecord, replaceCodeUpdateRecord,
+    replaceReferenceInFieldOneToMany, replaceCodeForOneToMany, replaceResolveForOneToMany  // For OneToMany fields
+  ];
 
   var result = Q({});
 

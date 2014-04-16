@@ -28,10 +28,15 @@ Apps.findOne(function (err, app) {
                 }
                 AppSchemas[model.id][field.id] = schema;
             });
+            var modelSchema = new Schema(AppSchemas[model.id], {
+              collection: model.id
+            });
+            // Make sure id is populate when querying
+            modelSchema.set('toJSON', {
+              virtuals: true
+            });
             // Create the models
-            AppModels[model.id] = mongoose.model(model.id, new Schema(AppSchemas[model.id], {
-                collection: model.id
-            }));
+            AppModels[model.id] = mongoose.model(model.id, modelSchema);
             console.log(AppSchemas[model.id]);
         });
     }
@@ -97,19 +102,25 @@ exports.saveRecord = function(req, res) {
 
 
 /**
- * Save a record
+ * Update a record
  */
 exports.updateRecord = function(req, res) {
     // Extract the modelId
     var modelId = req.params.modelId;
-    var Models = mongoose.model(modelId, new Schema({ any: Schema.Types.Mixed }));
+    var recordId = req.params.recordId;
 
-    return Models.findOneAndUpdate({
-        _id: ''
-    }, req.body, function (err, doc) {
+    console.log("Updating record " + recordId);
+    // Clear the Id
+    delete req.body.id;
+    delete req.body._id;
+    delete req.body.__v;
+    console.log(req.body);
+
+    return AppModels[modelId].findByIdAndUpdate(recordId, req.body, function (err, doc) {
         if (!err) {
             return res.json(doc);
         } else {
+            console.log(err);
             return res.send(err);
         }
     })
@@ -125,6 +136,27 @@ exports.getRecords = function(req, res) {
             return res.json(records);
         } else {
             return res.send(err);
+        }
+    });
+};
+
+/**
+ * Load a single record
+ */
+exports.getRecord = function(req, res) {
+    var modelId = req.params.modelId;
+    var recordId = req.params.recordId;
+    return AppModels[modelId].findById(recordId, function (err, record) {
+        if (!err) {
+            return res.json({
+              success: false,
+              result: record
+            });
+        } else {
+            return res.send({
+              success: false,
+              message: err
+            });
         }
     });
 };

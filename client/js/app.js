@@ -42,6 +42,9 @@ ngModule.config(function (RestangularProvider) {
     .setBaseUrl('/api')
     .setResponseExtractor(function (res) {
       return res.result;
+    })
+    .setErrorInterceptor(function (res) {
+    return res.success;
     });
 });
 
@@ -54,8 +57,8 @@ ngModule.run(function(editableOptions) {
 ngModule.run(['uiSelect2Config', function(uiSelect2Config) {
     uiSelect2Config.width = "100%";
     uiSelect2Config.allowClear = true;
-    uiSelect2Config.containerCssClass = 'select2boostrap-container'
-    uiSelect2Config.dropdownCssClass = 'select2boostrap-dropdown'
+    uiSelect2Config.containerCssClass = 'select2boostrap-container';
+    uiSelect2Config.dropdownCssClass = 'select2boostrap-dropdown';
 }]);
 // Routes
 ngModule.config(function ($stateProvider, $urlRouterProvider, layoutProvider) {

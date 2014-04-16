@@ -53,14 +53,16 @@ ngModule.config(function ($stateProvider) {
         recordData: ['Restangular', '$stateParams', 'app', 'appData', 'models', function (Restangular, $stateParams, app, appData, models) {
           if ($stateParams.recordId !== 'new') {
             var model = models.getModelByTitle(app.models, $stateParams.model);
+            /** start getRecordData **/
             return  _.find(appData[model.id], function(modelData) {
               return modelData.id === $stateParams.recordId; 
             });
-            //return Restangular.one('apps', $stateParams.appId).get();            
+            /** end getRecordData **/
+          } else {
+            return {
+              id: 'f' + Math.random()
+            };
           }
-          return {
-            id: 'field' + Math.random()
-          };
         }]
       }
     })
